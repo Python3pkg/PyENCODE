@@ -7,7 +7,7 @@ Licensed under MIT.
 import json
 import os
 import os.path
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 class HttpException(Exception):
     pass

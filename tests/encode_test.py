@@ -132,4 +132,4 @@ def _test_promotorsearch():
     
     # Leave the promotor/promotor flanking segments only
     results = [i for i in results if i.data[0] in ['PF', 'P']]
-    print results
+    print(results)

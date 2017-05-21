@@ -8,7 +8,7 @@ import gzip
 import json
 import os.path
 import re
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 from intervaltree_bio import GenomeIntervalTree
 
@@ -172,7 +172,7 @@ class EncodeFile(object):
         return self._attrs[name]
     
     def keys(self):
-        return self._attrs.keys()
+        return list(self._attrs.keys())
     
     def fetch(self, force=False):
         '''Download file into cache. Returns ``self`` for convenient chaining of calls.
@@ -190,7 +190,7 @@ class EncodeFile(object):
         if os.path.exists(self.local_path):
             return open(self.local_path, 'rb')
         else:
-            return with_closing_contextmanager(urllib.urlopen(self.url))
+            return with_closing_contextmanager(urllib.request.urlopen(self.url))
     
     def open_text(self):
         '''Same as ``open``, but will open file in text mode. In addition, if the file is ``.gz``, will automatically unpack (i.e. will return the result of ``GzipFile.open``).'''
@@ -200,7 +200,7 @@ class EncodeFile(object):
             else:
                 return open(self.local_path, 'r')
         else:
-            f = urllib.urlopen(self.url)
+            f = urllib.request.urlopen(self.url)
             if self.url.endswith('.gz'):
                 f = GzipInputStream(fileobj=f)                
             return with_closing_contextmanager(f)

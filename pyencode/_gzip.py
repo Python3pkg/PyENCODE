@@ -22,7 +22,7 @@ class GzipInputStream(gzip.GzipFile):
     
     def _read(self, size=1024):
         if self.fileobj is None:
-            raise EOFError, "Reached EOF"
+            raise EOFError("Reached EOF")
 
         if self._new_member:
             # If the _new_member flag is set, we have to
@@ -54,7 +54,7 @@ class GzipInputStream(gzip.GzipFile):
             uncompress = self.decompress.flush()
             self._read_eof()
             self._add_read_data( uncompress )
-            raise EOFError, 'Reached EOF'
+            raise EOFError('Reached EOF')
 
         uncompress = self.decompress.decompress(buf)
         self._add_read_data( uncompress )
@@ -75,7 +75,7 @@ class GzipInputStream(gzip.GzipFile):
             ## a new member on the next call
             ##self._read_eof()
             ##self._new_member = True
-            raise EOFError, 'Reached EOF' # XXX: Added this line
+            raise EOFError('Reached EOF') # XXX: Added this line
             # XXX: End of changed block.
             
     def _read_eof(self):
